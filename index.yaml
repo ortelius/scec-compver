@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   scec-compver:
   - apiVersion: v2
+    appVersion: 11.0.93
+    created: "2023-08-07T17:20:17.361538558Z"
+    description: Domain microservice
+    digest: 4ebbcc5b65841ba485317d933fb0e757dbdda25fcdb2b25c696d514743eb3670
+    icon: https://ortelius.github.io/ortelius-charts/logo.png
+    name: scec-compver
+    type: application
+    urls:
+    - https://github.com/ortelius/scec-compver/releases/download/scec-compver-11.0.93/scec-compver-11.0.93.tgz
+    version: 11.0.93
+  - apiVersion: v2
     appVersion: 11.0.91
     created: "2023-08-04T14:07:07.975613201Z"
     description: Domain microservice
@@ -364,4 +375,4 @@ entries:
     urls:
     - https://github.com/ortelius/scec-compver/releases/download/scec-compver-11.0.11/scec-compver-11.0.11.tgz
     version: 11.0.11
-generated: "2023-08-04T14:07:07.975109796Z"
+generated: "2023-08-07T17:20:17.361157853Z"
