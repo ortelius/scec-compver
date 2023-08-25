@@ -24,9 +24,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/msapi/domain": {
+        "/msapi/compver": {
             "get": {
-                "description": "Get a list of domains for the user.",
+                "description": "Get a list of component versions for the user.",
                 "consumes": [
                     "*/*"
                 ],
@@ -34,9 +34,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "domain"
+                    "compver"
                 ],
-                "summary": "Get a List of Domains",
+                "summary": "Get a List of Component Versions",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -44,7 +44,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create a new Domain and persist it",
+                "description": "Create a new CompVer and persist it",
                 "consumes": [
                     "application/json"
                 ],
@@ -52,9 +52,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "domain"
+                    "compver"
                 ],
-                "summary": "Create a Domain",
+                "summary": "Create a CompVer",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -62,9 +62,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/msapi/domain/:key": {
+        "/msapi/compver/:key": {
             "get": {
-                "description": "Get a domain based on the _key or name.",
+                "description": "Get a compver details based on the _key or name.",
                 "consumes": [
                     "*/*"
                 ],
@@ -72,9 +72,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "domain"
+                    "compver"
                 ],
-                "summary": "Get a Domain",
+                "summary": "Get a Component Version",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -89,10 +89,10 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "11.0.0",
 	Host:             "localhost:3000",
-	BasePath:         "/msapi/domain",
+	BasePath:         "/msapi/compver",
 	Schemes:          []string{},
-	Title:            "Ortelius v11 Domain Microservice",
-	Description:      "RestAPI for the Domain Object",
+	Title:            "Ortelius v11 CompVer Microservice",
+	Description:      "RestAPI for the CompVer Object",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

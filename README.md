@@ -1,5 +1,5 @@
-# Ortelius v11 Domain Microservice
-RestAPI for the Domain Object
+# Ortelius v11 CompVer Microservice
+RestAPI for the CompVer Object
 
 ## Version: 11.0.0
 
@@ -13,16 +13,16 @@ ortelius-dev@googlegroups.com
 **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ---
-### /msapi/domain
+### /msapi/compver
 
 #### GET
 ##### Summary
 
-Get a List of Domains
+Get a List of Component Versions
 
 ##### Description
 
-Get a list of domains for the user.
+Get a list of component versions for the user.
 
 ##### Responses
 
@@ -33,11 +33,11 @@ Get a list of domains for the user.
 #### POST
 ##### Summary
 
-Create a Domain
+Create a CompVer
 
 ##### Description
 
-Create a new Domain and persist it
+Create a new CompVer and persist it
 
 ##### Responses
 
@@ -45,16 +45,16 @@ Create a new Domain and persist it
 |------|-------------|
 | 200  | OK          |
 
-### /msapi/domain/:key
+### /msapi/compver/:key
 
 #### GET
 ##### Summary
 
-Get a Domain
+Get a Component Version
 
 ##### Description
 
-Get a domain based on the _key or name.
+Get a compver details based on the _key or name.
 
 ##### Responses
 
