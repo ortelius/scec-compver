@@ -104,7 +104,9 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 
 	} else { // not found so get from NFT Storage
 		if jsonStr, exists := database.MakeJSON(key); exists {
-			json.Unmarshal([]byte(jsonStr), compver) // convert the JSON string from LTF into the object
+			if err := json.Unmarshal([]byte(jsonStr), compver); err != nil { // convert the JSON string from LTF into the object
+				logger.Sugar().Errorf("Failed to unmarshal from LTS: %v", err)
+			}
 		}
 	}
 
@@ -130,7 +132,7 @@ func NewComponentVersionDetails(c *fiber.Ctx) error {
 		return c.Status(503).Send([]byte(err.Error()))
 	}
 
-	cid, dbStr := database.MakeNFT(compver) // normalize the object into NFTs and JSON string for db persistance
+	cid, dbStr := database.MakeNFT(compver) // normalize the object into NFTs and JSON string for db persistence
 
 	logger.Sugar().Infof("%s=%s\n", cid, dbStr) // log the new nft
 
