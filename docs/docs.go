@@ -44,7 +44,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create a new CompVer and persist it",
+                "description": "Create a new ComponentVersion and persist it",
                 "consumes": [
                     "application/json"
                 ],
@@ -54,7 +54,7 @@ const docTemplate = `{
                 "tags": [
                     "compver"
                 ],
-                "summary": "Create a CompVer",
+                "summary": "Create a ComponentVersion",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -91,8 +91,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:3000",
 	BasePath:         "/msapi/compver",
 	Schemes:          []string{},
-	Title:            "Ortelius v11 CompVer Microservice",
-	Description:      "RestAPI for the CompVer Object",
+	Title:            "Ortelius v11 ComponentVersion Microservice",
+	Description:      "RestAPI for the ComponentVersion Object\n![Release](https://img.shields.io/github/v/release/ortelius/scec-compver?sort=semver)\n![license](https://img.shields.io/github/license/ortelius/scec-compver)\n\n![Build](https://img.shields.io/github/actions/workflow/status/ortelius/scec-compver/build-push-chart.yml)\n[![MegaLinter](https://github.com/ortelius/scec-compver/workflows/MegaLinter/badge.svg?branch=main)](https://github.com/ortelius/scec-compver/actions?query=workflow%3AMegaLinter+branch%3Amain)\n![CodeQL](https://github.com/ortelius/scec-compver/workflows/CodeQL/badge.svg)\n[![OpenSSF-Scorecard](https://api.securityscorecards.dev/projects/github.com/ortelius/scec-compver/badge)](https://api.securityscorecards.dev/projects/github.com/ortelius/scec-compver)\n\n![Discord](https://img.shields.io/discord/722468819091849316)",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

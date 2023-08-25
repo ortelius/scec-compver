@@ -1,5 +1,14 @@
-# Ortelius v11 CompVer Microservice
-RestAPI for the CompVer Object
+# Ortelius v11 ComponentVersion Microservice
+RestAPI for the ComponentVersion Object
+![Release](https://img.shields.io/github/v/release/ortelius/scec-compver?sort=semver)
+![license](https://img.shields.io/github/license/ortelius/scec-compver)
+
+![Build](https://img.shields.io/github/actions/workflow/status/ortelius/scec-compver/build-push-chart.yml)
+[![MegaLinter](https://github.com/ortelius/scec-compver/workflows/MegaLinter/badge.svg?branch=main)](https://github.com/ortelius/scec-compver/actions?query=workflow%3AMegaLinter+branch%3Amain)
+![CodeQL](https://github.com/ortelius/scec-compver/workflows/CodeQL/badge.svg)
+[![OpenSSF-Scorecard](https://api.securityscorecards.dev/projects/github.com/ortelius/scec-compver/badge)](https://api.securityscorecards.dev/projects/github.com/ortelius/scec-compver)
+
+![Discord](https://img.shields.io/discord/722468819091849316)
 
 ## Version: 11.0.0
 
@@ -33,11 +42,11 @@ Get a list of component versions for the user.
 #### POST
 ##### Summary
 
-Create a CompVer
+Create a ComponentVersion
 
 ##### Description
 
-Create a new CompVer and persist it
+Create a new ComponentVersion and persist it
 
 ##### Responses
 

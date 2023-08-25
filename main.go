@@ -1,4 +1,4 @@
-// Ortelius v11 CompVer Microservice that handles creating and retrieving CompVer
+// Ortelius v11 ComponentVersion Microservice that handles creating and retrieving ComponentVersion
 package main
 
 import (
@@ -114,8 +114,8 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 }
 
 // NewComponentVersionDetails godoc
-// @Summary Create a CompVer
-// @Description Create a new CompVer and persist it
+// @Summary Create a ComponentVersion
+// @Description Create a new ComponentVersion and persist it
 // @Tags compver
 // @Accept application/json
 // @Produce json
@@ -154,9 +154,19 @@ func setupRoutes(app *fiber.App) {
 	app.Post("/msapi/compver", NewComponentVersionDetails)     // save a single compver
 }
 
-// @title Ortelius v11 CompVer Microservice
+// @title Ortelius v11 ComponentVersion Microservice
 // @version 11.0.0
-// @description RestAPI for the CompVer Object
+// @description RestAPI for the ComponentVersion Object
+// @description ![Release](https://img.shields.io/github/v/release/ortelius/scec-compver?sort=semver)
+// @description ![license](https://img.shields.io/github/license/ortelius/scec-compver)
+// @description
+// @description ![Build](https://img.shields.io/github/actions/workflow/status/ortelius/scec-compver/build-push-chart.yml)
+// @description [![MegaLinter](https://github.com/ortelius/scec-compver/workflows/MegaLinter/badge.svg?branch=main)](https://github.com/ortelius/scec-compver/actions?query=workflow%3AMegaLinter+branch%3Amain)
+// @description ![CodeQL](https://github.com/ortelius/scec-compver/workflows/CodeQL/badge.svg)
+// @description [![OpenSSF-Scorecard](https://api.securityscorecards.dev/projects/github.com/ortelius/scec-compver/badge)](https://api.securityscorecards.dev/projects/github.com/ortelius/scec-compver)
+// @description
+// @description ![Discord](https://img.shields.io/discord/722468819091849316)
+
 // @termsOfService http://swagger.io/terms/
 // @contact.name Ortelius Google Group
 // @contact.email ortelius-dev@googlegroups.com
