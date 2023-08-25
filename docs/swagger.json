@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "RestAPI for the Domain Object",
-    "title": "Ortelius v11 Domain Microservice",
+    "description": "RestAPI for the CompVer Object",
+    "title": "Ortelius v11 CompVer Microservice",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "name": "Ortelius Google Group",
@@ -15,15 +15,15 @@
     "version": "11.0.0"
   },
   "host": "localhost:3000",
-  "basePath": "/msapi/domain",
+  "basePath": "/msapi/compver",
   "paths": {
-    "/msapi/domain": {
+    "/msapi/compver": {
       "get": {
-        "description": "Get a list of domains for the user.",
+        "description": "Get a list of component versions for the user.",
         "consumes": ["*/*"],
         "produces": ["application/json"],
-        "tags": ["domain"],
-        "summary": "Get a List of Domains",
+        "tags": ["compver"],
+        "summary": "Get a List of Component Versions",
         "responses": {
           "200": {
             "description": "OK"
@@ -31,11 +31,11 @@
         }
       },
       "post": {
-        "description": "Create a new Domain and persist it",
+        "description": "Create a new CompVer and persist it",
         "consumes": ["application/json"],
         "produces": ["application/json"],
-        "tags": ["domain"],
-        "summary": "Create a Domain",
+        "tags": ["compver"],
+        "summary": "Create a CompVer",
         "responses": {
           "200": {
             "description": "OK"
@@ -43,13 +43,13 @@
         }
       }
     },
-    "/msapi/domain/:key": {
+    "/msapi/compver/:key": {
       "get": {
-        "description": "Get a domain based on the _key or name.",
+        "description": "Get a compver details based on the _key or name.",
         "consumes": ["*/*"],
         "produces": ["application/json"],
-        "tags": ["domain"],
-        "summary": "Get a Domain",
+        "tags": ["compver"],
+        "summary": "Get a Component Version",
         "responses": {
           "200": {
             "description": "OK"

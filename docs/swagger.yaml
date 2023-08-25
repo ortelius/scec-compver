@@ -1,53 +1,53 @@
-basePath: /msapi/domain
+basePath: /msapi/compver
 host: localhost:3000
 info:
   contact:
     email: ortelius-dev@googlegroups.com
     name: Ortelius Google Group
-  description: RestAPI for the Domain Object
+  description: RestAPI for the CompVer Object
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Ortelius v11 Domain Microservice
+  title: Ortelius v11 CompVer Microservice
   version: 11.0.0
 paths:
-  /msapi/domain:
+  /msapi/compver:
     get:
       consumes:
         - "*/*"
-      description: Get a list of domains for the user.
+      description: Get a list of component versions for the user.
       produces:
         - application/json
       responses:
         "200":
           description: OK
-      summary: Get a List of Domains
+      summary: Get a List of Component Versions
       tags:
-        - domain
+        - compver
     post:
       consumes:
         - application/json
-      description: Create a new Domain and persist it
+      description: Create a new CompVer and persist it
       produces:
         - application/json
       responses:
         "200":
           description: OK
-      summary: Create a Domain
+      summary: Create a CompVer
       tags:
-        - domain
-  /msapi/domain/:key:
+        - compver
+  /msapi/compver/:key:
     get:
       consumes:
         - "*/*"
-      description: Get a domain based on the _key or name.
+      description: Get a compver details based on the _key or name.
       produces:
         - application/json
       responses:
         "200":
           description: OK
-      summary: Get a Domain
+      summary: Get a Component Version
       tags:
-        - domain
+        - compver
 swagger: "2.0"
