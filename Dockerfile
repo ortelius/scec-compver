@@ -5,6 +5,7 @@ COPY . /app
 
 RUN go install github.com/swaggo/swag/cmd/swag@latest; \
     /root/go/bin/swag init; \
+    go mod tidy; \
     go build -o main .
 
 FROM cgr.dev/chainguard/glibc-dynamic@sha256:652ca01119b8ff8aa590384eadb840fb1145fca9ceb87f77e6df48601037a846
