@@ -9,6 +9,7 @@ import (
 
 	"github.com/arangodb/go-driver"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/swagger"
 	"github.com/ortelius/scec-commons/database"
 	"github.com/ortelius/scec-commons/model"
@@ -177,8 +178,14 @@ func setupRoutes(app *fiber.App) {
 func main() {
 	port := ":" + database.GetEnvDefault("MS_PORT", "8080") // database port
 	app := fiber.New()                                      // create a new fiber application
-	setupRoutes(app)                                        // define the routes for this microservice
-	if err := app.Listen(port); err != nil {                // start listening for incoming connections
+	app.Use(cors.New(cors.Config{
+		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowOrigins: "*",
+	}))
+
+	setupRoutes(app) // define the routes for this microservice
+
+	if err := app.Listen(port); err != nil { // start listening for incoming connections
 		logger.Sugar().Fatalf("Failed get the microservice running: %v", err)
 	}
 }
