@@ -7,7 +7,7 @@
       "request": "launch",
       "mode": "auto",
       "program": "${fileDirname}",
-      "env": { "ARANGO_PASS": "" }
+      "env": { "ARANGO_PASS": "rootpassword" }
     }
   ]
 }
