@@ -26,7 +26,7 @@
   },
   "packageRules": [
     {
-      "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest","digest"],
       "automerge": true,
       "autoApprove": true
     }
