@@ -1,6 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "ignorePaths": ["chart/**", "requirements.txt"],
+  "schedule": [
+    "0 * * * *"
+  ],
+  "automergeSchedule": [
+    "30 * * * *"
+  ],
   "prHourlyLimit": 4,
   "pip_requirements": {
     "fileMatch": ["(^|/)requirements\\.in$"]
