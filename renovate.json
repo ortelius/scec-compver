@@ -2,10 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "ignorePaths": ["chart/**", "requirements.txt"],
   "schedule": [
-    "every 1 hours"
+    "every 1 hours every weekday"
   ],
   "automergeSchedule": [
-    "every 1 hours"
+    "every 1 hours every weekday"
   ],
   "prHourlyLimit": 4,
   "pip_requirements": {
