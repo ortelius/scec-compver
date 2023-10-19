@@ -16,7 +16,7 @@ import (
 )
 
 var logger = database.InitLogger()
-var dbconn = database.InitializeDB()
+var dbconn = database.InitializeDB("evidence")
 
 // GetComponentVersions godoc
 // @Summary Get a List of Component Versions
@@ -82,9 +82,31 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 	}
 
 	// query the compvers that match the key or name
-	aql := `FOR compver in evidence
-			FILTER (compver.name == @key or compver._key == @key)
-			RETURN compver`
+	aql := `FOR comp IN evidence
+				FILTER (comp.objtype == 'ComponentVersionDetails' && comp._key == @key)
+				RETURN MERGE(comp, {
+				"packages": (
+					FOR sbom IN sbom
+					FILTER sbom.objtype == "SBOM" && comp.sbom_key == sbom._key
+					FOR packages IN sbom.content.components
+						LET lics = LENGTH(packages.licenses) > 0
+						? (FOR lic IN packages.licenses
+							FILTER LENGTH(packages.licenses) > 0
+							RETURN lic.license.id)
+						: [""]
+						FOR props IN packages.properties
+						FILTER CONTAINS(props.name, 'language')
+						FOR lic IN lics
+							RETURN {
+							"name": packages.name,
+							"version": packages.version,
+							"purl": packages.purl,
+							"lang": props.value,
+							"license": lic
+							}
+					)
+					}
+				)`
 
 	// run the query with patameters
 	if cursor, err = dbconn.Database.Query(ctx, aql, parameters); err != nil {
