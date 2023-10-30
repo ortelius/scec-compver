@@ -4,8 +4,14 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"strings"
 
 	_ "cli/docs"
+
+	"cli/models"
+
+	"github.com/goark/go-cvss/v3/metric"
 
 	"github.com/arangodb/go-driver"
 	"github.com/gofiber/fiber/v2"
@@ -131,6 +137,78 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 				logger.Sugar().Errorf("Failed to unmarshal from LTS: %v", err)
 			}
 		}
+	}
+
+	for _, pkg := range compver.Packages {
+		pkgInfo, _ := models.PURLToPackage(pkg.Purl)
+
+		osvPkg := models.PackageDetails{
+			Name:      pkgInfo.Name,
+			Version:   pkgInfo.Version,
+			Commit:    pkgInfo.Commit,
+			Ecosystem: models.Ecosystem(pkgInfo.Ecosystem),
+			CompareAs: models.Ecosystem(pkgInfo.Ecosystem),
+		}
+
+		parameters = map[string]interface{}{ // parameters
+			"name": pkg.Name,
+		}
+
+		aql = `FOR vuln IN vulns
+				FOR affected in vuln.affected
+					FILTER (@name in vuln.affected[*].package.name AND affected.package.name == @name)
+					RETURN merge({ID: vuln._key}, vuln)`
+
+		if len(strings.TrimSpace(pkg.Purl)) > 0 {
+			// Split the purl string by "@" and "?"
+			parts := strings.Split(pkg.Purl, "@")
+			parts = strings.Split(parts[0], "?")
+
+			// The first part before "@" and "?" is in parts[0]
+			purl := parts[0]
+
+			parameters = map[string]interface{}{ // parameters
+				"name": pkg.Name,
+				"purl": purl,
+			}
+
+			aql = `FOR vuln IN vulns
+					FOR affected in vuln.affected
+						FILTER (@name in vuln.affected[*].package.name AND affected.package.name == @name) OR
+							(@purl in vuln.affected[*].package.purl AND STARTS_WITH(affected.package.purl,@purl))
+						RETURN merge({ID: vuln._key}, vuln)`
+		}
+
+		// run the query with patameters
+		if cursor, err = dbconn.Database.Query(ctx, aql, parameters); err != nil {
+			logger.Sugar().Errorf("Failed to run query: %v", err)
+		}
+
+		score := 0.0
+		severity := ""
+		defer cursor.Close() // close the cursor when returning from this function
+
+		for cursor.HasMore() { // vuln found
+
+			var vuln models.Vulnerability
+
+			if _, err = cursor.ReadDocument(ctx, &vuln); err != nil { // fetch the document into the object
+				logger.Sugar().Errorf("Failed to read document: %v", err)
+			}
+
+			if models.IsAffected(vuln, osvPkg) && !strings.Contains(pkg.CVE, vuln.ID) {
+				pkg.CVE = strings.TrimLeft(fmt.Sprintf("%s,%s", pkg.CVE, vuln.ID), ",")
+				if bm, err := metric.NewBase().Decode(vuln.Severity[0].Score); err == nil {
+					if bm.Score() > score {
+						score = bm.Score()
+						severity = bm.Severity().String()
+					}
+				}
+			}
+		}
+
+		pkg.Score = score
+		pkg.Severity = severity
 	}
 
 	return c.JSON(compver) // return the compver in JSON format
