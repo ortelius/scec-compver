@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 
 	_ "cli/docs"
@@ -209,7 +210,16 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 
 		pkg.Score = score
 		pkg.Severity = severity
+
+		if severity == "" {
+			pkg.Severity = "None"
+		}
 	}
+
+	sort.Slice(compver.Packages, func(i, j int) bool {
+		a, b := compver.Packages[i], compver.Packages[j]
+		return a.Score > b.Score || (a.Score == b.Score && (a.Name < b.Name || (a.Name == b.Name && a.Version < b.Version)))
+	})
 
 	return c.JSON(compver) // return the compver in JSON format
 }
