@@ -1,16 +1,21 @@
 module cli
 
-go 1.20
+go 1.21
+
+toolchain go1.21.1
 
 require (
 	github.com/arangodb/go-driver v1.6.0
 	github.com/gofiber/fiber/v2 v2.50.0
-	github.com/ortelius/scec-commons v0.1.19
+	github.com/google/go-cmp v0.6.0
+	github.com/ortelius/scec-commons v0.1.21
+	github.com/package-url/packageurl-go v0.1.2
 	github.com/swaggo/swag v1.16.2
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
 )
 
 require (
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
+	github.com/goark/errs v1.3.2 // indirect
 	github.com/sanity-io/litter v1.5.5 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
@@ -26,11 +31,13 @@ require (
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/go-openapi/spec v0.20.9 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
+	github.com/goark/go-cvss v1.6.6
 	github.com/gofiber/swagger v0.1.14
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/osv-scanner v1.4.2
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/ipfs/go-cid v0.4.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
-	github.com/klauspost/compress v1.17.1 // indirect
+	github.com/klauspost/compress v1.17.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -53,6 +60,6 @@ require (
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1
 	lukechampine.com/blake3 v1.2.1 // indirect
 )
