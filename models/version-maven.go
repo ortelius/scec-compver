@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -97,6 +99,7 @@ func (vt *mavenVersionToken) lessThan(wt mavenVersionToken) bool {
 	return vt.qualifierOrder() < wt.qualifierOrder()
 }
 
+// MavenVersion defines a maven version token
 type MavenVersion struct {
 	tokens []mavenVersionToken
 }
@@ -300,6 +303,8 @@ func newMavenVersion(str string) MavenVersion {
 
 	return MavenVersion{tokens}
 }
+
+// Compare Maven Version structs
 func (mv MavenVersion) Compare(w MavenVersion) int {
 	if mv.equal(w) {
 		return 0
@@ -311,6 +316,7 @@ func (mv MavenVersion) Compare(w MavenVersion) int {
 	return +1
 }
 
+// CompareStr Maven Version strings
 func (mv MavenVersion) CompareStr(str string) int {
 	return mv.Compare(parseMavenVersion(str))
 }

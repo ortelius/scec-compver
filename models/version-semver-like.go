@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -33,6 +35,7 @@ func (v *SemverLikeVersion) fetchComponentsAndBuild(maxComponents int) (Componen
 	return comps, build
 }
 
+// ParseSemverLikeVersion parses the string that is based on Semver patterns
 func ParseSemverLikeVersion(line string, maxComponents int) SemverLikeVersion {
 	v := parseSemverLike(line)
 

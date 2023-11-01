@@ -1,25 +1,10 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
 	"github.com/package-url/packageurl-go"
 )
-
-// used like so: purlEcosystems[PkgURL.Type][PkgURL.Namespace]
-// * means it should match any namespace string
-var purlEcosystems = map[string]map[string]Ecosystem{
-	"apk":      {"alpine": EcosystemAlpine},
-	"cargo":    {"*": EcosystemCratesIO},
-	"deb":      {"debian": EcosystemDebian},
-	"hex":      {"*": EcosystemHex},
-	"golang":   {"*": EcosystemGo},
-	"maven":    {"*": EcosystemMaven},
-	"nuget":    {"*": EcosystemNuGet},
-	"npm":      {"*": EcosystemNPM},
-	"composer": {"*": EcosystemPackagist},
-	"generic":  {"*": EcosystemOSSFuzz},
-	"pypi":     {"*": EcosystemPyPI},
-	"gem":      {"*": EcosystemRubyGems},
-}
 
 func getPURLEcosystem(pkgURL packageurl.PackageURL) Ecosystem {
 	ecoMap, ok := purlEcosystems[pkgURL.Type]

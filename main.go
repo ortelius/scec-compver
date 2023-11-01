@@ -12,9 +12,10 @@ import (
 
 	"cli/models"
 
+	"github.com/arangodb/go-driver/v2/arangodb"
+	"github.com/arangodb/go-driver/v2/arangodb/shared"
 	"github.com/goark/go-cvss/v3/metric"
 
-	"github.com/arangodb/go-driver"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/swagger"
@@ -35,7 +36,7 @@ var dbconn = database.InitializeDB("evidence")
 // @Router /msapi/compver [get]
 func GetComponentVersions(c *fiber.Ctx) error {
 
-	var cursor driver.Cursor       // db cursor for rows
+	var cursor arangodb.Cursor     // db cursor for rows
 	var err error                  // for error handling
 	var ctx = context.Background() // use default database context
 
@@ -56,7 +57,7 @@ func GetComponentVersions(c *fiber.Ctx) error {
 	for cursor.HasMore() { // loop thru all of the documents
 
 		compver := model.NewComponentVersion() // fetched compver
-		var meta driver.DocumentMeta           // data about the fetch
+		var meta arangodb.DocumentMeta         // data about the fetch
 
 		// fetch a document from the cursor
 		if meta, err = cursor.ReadDocument(ctx, compver); err != nil {
@@ -79,7 +80,7 @@ func GetComponentVersions(c *fiber.Ctx) error {
 // @Router /msapi/compver/:key [get]
 func GetComponentVersionDetails(c *fiber.Ctx) error {
 
-	var cursor driver.Cursor       // db cursor for rows
+	var cursor arangodb.Cursor     // db cursor for rows
 	var err error                  // for error handling
 	var ctx = context.Background() // use default database context
 
@@ -116,7 +117,7 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 				)`
 
 	// run the query with patameters
-	if cursor, err = dbconn.Database.Query(ctx, aql, parameters); err != nil {
+	if cursor, err = dbconn.Database.Query(ctx, aql, &arangodb.QueryOptions{BindVars: parameters}); err != nil {
 		logger.Sugar().Errorf("Failed to run query: %v", err)
 	}
 
@@ -125,7 +126,7 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 	compver := model.NewComponentVersionDetails() // define a compver to be returned
 
 	if cursor.HasMore() { // compver found
-		var meta driver.DocumentMeta // data about the fetch
+		var meta arangodb.DocumentMeta // data about the fetch
 
 		if meta, err = cursor.ReadDocument(ctx, compver); err != nil { // fetch the document into the object
 			logger.Sugar().Errorf("Failed to read document: %v", err)
@@ -181,7 +182,7 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 		}
 
 		// run the query with patameters
-		if cursor, err = dbconn.Database.Query(ctx, aql, parameters); err != nil {
+		if cursor, err = dbconn.Database.Query(ctx, aql, &arangodb.QueryOptions{BindVars: parameters}); err != nil {
 			logger.Sugar().Errorf("Failed to run query: %v", err)
 		}
 
@@ -234,10 +235,10 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 // @Router /msapi/compver [post]
 func NewComponentVersionDetails(c *fiber.Ctx) error {
 
-	var err error                                 // for error handling
-	var meta driver.DocumentMeta                  // data about the document
-	var ctx = context.Background()                // use default database context
-	compver := model.NewComponentVersionDetails() // define a compver to be returned
+	var err error                                      // for error handling
+	var resp arangodb.CollectionDocumentCreateResponse // data about the document
+	var ctx = context.Background()                     // use default database context
+	compver := model.NewComponentVersionDetails()      // define a compver to be returned
 
 	if err = c.BodyParser(compver); err != nil { // parse the JSON into the compver object
 		return c.Status(503).Send([]byte(err.Error()))
@@ -248,9 +249,10 @@ func NewComponentVersionDetails(c *fiber.Ctx) error {
 	logger.Sugar().Infof("%s=%s\n", cid, dbStr) // log the new nft
 
 	// add the compver to the database.  Ignore if it already exists since it will be identical
-	if meta, err = dbconn.Collection.CreateDocument(ctx, compver); err != nil && !driver.IsConflict(err) {
+	if resp, err = dbconn.Collection.CreateDocument(ctx, compver); err != nil && !shared.IsConflict(err) {
 		logger.Sugar().Errorf("Failed to create document: %v", err)
 	}
+	meta := resp.DocumentMeta
 	logger.Sugar().Infof("Created document in collection '%s' in db '%s' key='%s'\n", dbconn.Collection.Name(), dbconn.Database.Name(), meta.Key)
 
 	return c.JSON(compver) // return the compver object in JSON format.  This includes the new _key

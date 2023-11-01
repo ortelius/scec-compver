@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -5,8 +7,10 @@ import (
 	"fmt"
 )
 
+// ErrUnsupportedEcosystem defines the unsupported ecosystem error
 var ErrUnsupportedEcosystem = errors.New("unsupported ecosystem")
 
+// MustParse parses the version string based on the ecosystem and panics if it fails to parse
 func MustParse(str string, ecosystem Ecosystem) Version {
 	v, err := Parse(str, ecosystem)
 
@@ -17,6 +21,7 @@ func MustParse(str string, ecosystem Ecosystem) Version {
 	return v
 }
 
+// Parse chooses the correct parser based on the ecosystem
 func Parse(str string, ecosystem Ecosystem) (Version, error) {
 	//nolint:exhaustive // Using strings to specify ecosystem instead of lockfile types
 	switch ecosystem {

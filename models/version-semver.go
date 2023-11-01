@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -82,6 +84,7 @@ func compareSemverBuildComponents(a, b []string) int {
 	return 0
 }
 
+// SemverVersion defines the Semver Version string
 type SemverVersion struct {
 	SemverLikeVersion
 }
@@ -90,6 +93,7 @@ func parseSemverVersion(str string) SemverVersion {
 	return SemverVersion{ParseSemverLikeVersion(str, 3)}
 }
 
+// Compare Semver Version structs
 func (v SemverVersion) Compare(w SemverVersion) int {
 	if diff := v.Components.Cmp(w.Components); diff != 0 {
 		return diff
@@ -98,6 +102,7 @@ func (v SemverVersion) Compare(w SemverVersion) int {
 	return compareBuildComponents(v.Build, w.Build)
 }
 
+// CompareStr Semver Version strings
 func (v SemverVersion) CompareStr(str string) int {
 	return v.Compare(parseSemverVersion(str))
 }

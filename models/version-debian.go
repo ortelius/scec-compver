@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -117,12 +119,14 @@ func compareDebianVersions(a, b string) int {
 	return 0
 }
 
+// DebianVersion defines the Debian Version String
 type DebianVersion struct {
 	epoch    *big.Int
 	upstream string
 	revision string
 }
 
+// Compare Debian Version structs
 func (v DebianVersion) Compare(w DebianVersion) int {
 	if diff := v.epoch.Cmp(w.epoch); diff != 0 {
 		return diff
@@ -137,6 +141,7 @@ func (v DebianVersion) Compare(w DebianVersion) int {
 	return 0
 }
 
+// CompareStr Debian Version strings
 func (v DebianVersion) CompareStr(str string) int {
 	return v.Compare(parseDebianVersion(str))
 }
