@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -127,6 +129,7 @@ func compareRubyGemsComponents(a, b []string) int {
 	return 0
 }
 
+// RubyGemsVersion defines the Ruby Gem Version string
 type RubyGemsVersion struct {
 	Original string
 	Segments []string
@@ -139,10 +142,12 @@ func parseRubyGemsVersion(str string) RubyGemsVersion {
 	}
 }
 
+// Compare RubyGems Version structs
 func (v RubyGemsVersion) Compare(w RubyGemsVersion) int {
 	return compareRubyGemsComponents(v.Segments, w.Segments)
 }
 
+// CompareStr RubyGems Version string
 func (v RubyGemsVersion) CompareStr(str string) int {
 	return v.Compare(parseRubyGemsVersion(str))
 }

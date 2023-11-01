@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -5,6 +7,7 @@ import (
 	"fmt"
 )
 
+// Vulnerabilities defines an array of Vulnerability
 type Vulnerabilities []Vulnerability
 
 // MarshalJSON ensures that if there are no vulnerabilities,
