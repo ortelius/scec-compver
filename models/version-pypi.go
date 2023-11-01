@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -6,6 +8,7 @@ import (
 	"strings"
 )
 
+// PyPIVersion defines te PyPI Version string
 type PyPIVersion struct {
 	epoch   *big.Int
 	release Components
@@ -374,10 +377,12 @@ func pypiCompareVersion(v, w PyPIVersion) int {
 	return 0
 }
 
+// Compare PyPI Version structs
 func (pv PyPIVersion) Compare(pw PyPIVersion) int {
 	return pypiCompareVersion(pv, pw)
 }
 
+// CompareStr PyPI Version strings
 func (pv PyPIVersion) CompareStr(str string) int {
 	return pv.Compare(parsePyPIVersion(str))
 }

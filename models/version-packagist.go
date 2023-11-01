@@ -1,3 +1,5 @@
+// Package models defines the structures and functions used to determine if a
+// SBOM package is affected by a OSV.DEV vulnerabity.
 package models
 
 import (
@@ -102,6 +104,7 @@ func comparePackagistComponents(a, b []string) int {
 	return 0
 }
 
+// PackagistVersion defines a Packagist Version string
 type PackagistVersion struct {
 	Original   string
 	Components []string
@@ -114,10 +117,12 @@ func parsePackagistVersion(str string) PackagistVersion {
 	}
 }
 
+// Compare Packagist Version structs
 func (v PackagistVersion) Compare(w PackagistVersion) int {
 	return comparePackagistComponents(v.Components, w.Components)
 }
 
+// CompareStr Packagist Version strings
 func (v PackagistVersion) CompareStr(str string) int {
 	return v.Compare(parsePackagistVersion(str))
 }
