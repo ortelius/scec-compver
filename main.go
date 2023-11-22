@@ -91,30 +91,33 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 
 	// query the compvers that match the key or name
 	aql := `FOR comp IN evidence
-				FILTER (comp.objtype == 'ComponentVersionDetails' && comp._key == @key)
-				RETURN MERGE(comp, {
-				"packages": (
-					FOR sbom IN sbom
-					FILTER sbom.objtype == "SBOM" && comp.sbom_key == sbom._key
-					FOR packages IN sbom.content.components
-						LET lics = LENGTH(packages.licenses) > 0
-						? (FOR lic IN packages.licenses
-							FILTER LENGTH(packages.licenses) > 0
-							RETURN lic.license.id)
-						: [""]
-						FOR props IN packages.properties
-						FILTER CONTAINS(props.name, 'language')
-						FOR lic IN lics
-							RETURN {
-							"name": packages.name,
-							"version": packages.version,
-							"purl": packages.purl,
-							"lang": props.value,
-							"license": lic
-							}
-					)
-					}
-				)`
+	FILTER (comp.objtype == 'ComponentVersionDetails' && comp._key == @key)
+	RETURN MERGE(comp, {
+	"packages": (
+		FOR sbom IN sbom
+		FILTER sbom.objtype == "SBOM" && comp.sbom_key == sbom._key
+		FOR packages IN sbom.content.components
+			LET lics = LENGTH(packages.licenses) > 0
+			? (FOR lic IN packages.licenses
+				FILTER LENGTH(packages.licenses) > 0
+					LET id = LENGTH(lic.license.id) > 0
+					? lic.license.id
+					: SPLIT(lic.license.name, "----")[0]
+					RETURN id
+				)
+			: [""]
+
+			FOR lic IN lics
+				RETURN {
+				"name": packages.name,
+				"version": packages.version,
+				"purl": packages.purl,
+				"license": lic,
+				"language": SPLIT(SPLIT(packages.purl, ":")[1], "/")[0]
+				}
+		)
+		}
+	)`
 
 	// run the query with patameters
 	if cursor, err = dbconn.Database.Query(ctx, aql, &arangodb.QueryOptions{BindVars: parameters}); err != nil {
@@ -200,10 +203,15 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 
 			if models.IsAffected(vuln, osvPkg) && !strings.Contains(pkg.CVE, vuln.ID) {
 				pkg.CVE = strings.TrimLeft(fmt.Sprintf("%s,%s", pkg.CVE, vuln.ID), ",")
-				if bm, err := metric.NewBase().Decode(vuln.Severity[0].Score); err == nil {
-					if bm.Score() > score {
-						score = bm.Score()
-						severity = bm.Severity().String()
+				if !strings.Contains(pkg.Summary, vuln.Summary) {
+					pkg.Summary = strings.TrimLeft(pkg.Summary+"|"+vuln.Summary, "|")
+				}
+				if len(vuln.Severity) > 0 {
+					if bm, err := metric.NewBase().Decode(vuln.Severity[0].Score); err == nil {
+						if bm.Score() > score {
+							score = bm.Score()
+							severity = bm.Severity().String()
+						}
 					}
 				}
 			}
