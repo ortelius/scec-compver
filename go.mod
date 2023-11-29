@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/arangodb/go-driver/v2 v2.0.3
 	github.com/gofiber/fiber/v2 v2.51.0
-	github.com/ortelius/scec-commons v0.1.25
+	github.com/ortelius/scec-commons v0.1.26
 	github.com/package-url/packageurl-go v0.1.2
 	github.com/swaggo/swag v1.16.2
 	golang.org/x/exp v0.0.0-20231127185646-65229373498e
