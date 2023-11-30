@@ -266,6 +266,11 @@ func NewComponentVersionDetails(c *fiber.Ctx) error {
 	return c.JSON(compver) // return the compver object in JSON format.  This includes the new _key
 }
 
+// HealthCheck for kubernetes to determine if it is in a good state
+func HealthCheck(c *fiber.Ctx) error {
+	return c.SendString("OK")
+}
+
 // setupRoutes defines maps the routes to the functions
 func setupRoutes(app *fiber.App) {
 
@@ -273,6 +278,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/msapi/compver", GetComponentVersions)            // list of compvers
 	app.Get("/msapi/compver/:key", GetComponentVersionDetails) // single compver based on name or key
 	app.Post("/msapi/compver", NewComponentVersionDetails)     // save a single compver
+	app.Get("/health", HealthCheck)                            // Health check endpoint
 }
 
 // @title Ortelius v11 ComponentVersion Microservice
