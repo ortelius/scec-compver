@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/arangodb/go-driver/v2 v2.0.3
-	github.com/gofiber/fiber/v2 v2.51.0
+	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/ortelius/scec-commons v0.1.26
 	github.com/package-url/packageurl-go v0.1.2
 	github.com/swaggo/swag v1.16.2
@@ -35,7 +35,7 @@ require (
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/goark/go-cvss v1.6.6
 	github.com/gofiber/swagger v0.1.14
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/ipfs/go-cid v0.4.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/klauspost/compress v1.17.2 // indirect
@@ -56,7 +56,7 @@ require (
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.50.0 // indirect
+	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/crypto v0.16.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
