@@ -8,7 +8,7 @@ require (
 	github.com/ortelius/scec-commons v0.1.26
 	github.com/package-url/packageurl-go v0.1.2
 	github.com/swaggo/swag v1.16.3
-	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
+	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225
 )
 
 require (
