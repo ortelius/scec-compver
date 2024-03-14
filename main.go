@@ -9,12 +9,12 @@ import (
 	"strings"
 
 	_ "cli/docs"
-
 	"cli/models"
 
 	"github.com/arangodb/go-driver/v2/arangodb"
 	"github.com/arangodb/go-driver/v2/arangodb/shared"
-	"github.com/goark/go-cvss/v3/metric"
+	"github.com/goark/go-cvss/v2/metric"
+	metric_v3 "github.com/goark/go-cvss/v3/metric"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -207,10 +207,19 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 					pkg.Summary = strings.TrimLeft(pkg.Summary+"|"+vuln.Summary, "|")
 				}
 				if len(vuln.Severity) > 0 {
-					if bm, err := metric.NewBase().Decode(vuln.Severity[0].Score); err == nil {
-						if bm.Score() > score {
-							score = bm.Score()
-							severity = bm.Severity().String()
+					if vuln.Severity[0].Type == "CVSS_V3" {
+						if bm, err := metric_v3.NewBase().Decode(vuln.Severity[0].Score); err == nil {
+							if bm.Score() > score {
+								score = bm.Score()
+								severity = bm.Severity().String()
+							}
+						}
+					} else {
+						if bm, err := metric.NewBase().Decode(vuln.Severity[0].Score); err == nil {
+							if bm.Score() > score {
+								score = bm.Score()
+								severity = bm.Severity().String()
+							}
 						}
 					}
 				}
