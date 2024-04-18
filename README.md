@@ -1,4 +1,7 @@
 # Ortelius v11 ComponentVersion Microservice
+
+> Version 11.0.0
+
 RestAPI for the ComponentVersion Object
 ![Release](https://img.shields.io/github/v/release/ortelius/scec-compver?sort=semver)
 ![license](https://img.shields.io/github/license/ortelius/scec-compver)
@@ -10,63 +13,61 @@ RestAPI for the ComponentVersion Object
 
 ![Discord](https://img.shields.io/discord/722468819091849316)
 
-## Version: 11.0.0
+## Path Table
 
-### Terms of service
-<http://swagger.io/terms/>
+| Method | Path | Description |
+| --- | --- | --- |
+| GET | [/msapi/compver](#getmsapicompver) | Get a List of Component Versions |
+| POST | [/msapi/compver](#postmsapicompver) | Create a ComponentVersion |
+| GET | [/msapi/compver/:key](#getmsapicompverkey) | Get a Component Version |
 
-**Contact information:**
-Ortelius Google Group
-<ortelius-dev@googlegroups.com>
+## Reference Table
 
-**License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+| Name | Path | Description |
+| --- | --- | --- |
 
----
-### /msapi/compver
+## Path Details
 
-#### GET
-##### Summary
+***
 
+### [GET]/msapi/compver
+
+- Summary  
 Get a List of Component Versions
 
-##### Description
-
+- Description  
 Get a list of component versions for the user.
 
-##### Responses
+#### Responses
 
-| Code | Description |
-|------|-------------|
-| 200  | OK          |
+- 200 OK
 
-#### POST
-##### Summary
+***
 
+### [POST]/msapi/compver
+
+- Summary  
 Create a ComponentVersion
 
-##### Description
-
+- Description  
 Create a new ComponentVersion and persist it
 
-##### Responses
+#### Responses
 
-| Code | Description |
-|------|-------------|
-| 200  | OK          |
+- 200 OK
 
-### /msapi/compver/:key
+***
 
-#### GET
-##### Summary
+### [GET]/msapi/compver/:key
 
+- Summary  
 Get a Component Version
 
-##### Description
-
+- Description  
 Get a compver details based on the _key or name.
 
-##### Responses
+#### Responses
 
-| Code | Description |
-|------|-------------|
-| 200  | OK          |
+- 200 OK
+
+## References
