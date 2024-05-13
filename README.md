@@ -4,7 +4,7 @@
 
 RestAPI for the ComponentVersion Object
 ![Release](https://img.shields.io/github/v/release/ortelius/scec-compver?sort=semver)
-![license](https://img.shields.io/github/license/ortelius/scec-compver)
+![license](https://img.shields.io/github/license/ortelius/.github)
 
 ![Build](https://img.shields.io/github/actions/workflow/status/ortelius/scec-compver/build-push-chart.yml)
 [![MegaLinter](https://github.com/ortelius/scec-compver/workflows/MegaLinter/badge.svg?branch=main)](https://github.com/ortelius/scec-compver/actions?query=workflow%3AMegaLinter+branch%3Amain)
