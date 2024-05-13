@@ -294,7 +294,7 @@ func setupRoutes(app *fiber.App) {
 // @version 11.0.0
 // @description RestAPI for the ComponentVersion Object
 // @description ![Release](https://img.shields.io/github/v/release/ortelius/scec-compver?sort=semver)
-// @description ![license](https://img.shields.io/github/license/ortelius/scec-compver)
+// @description ![license](https://img.shields.io/github/license/ortelius/.github)
 // @description
 // @description ![Build](https://img.shields.io/github/actions/workflow/status/ortelius/scec-compver/build-push-chart.yml)
 // @description [![MegaLinter](https://github.com/ortelius/scec-compver/workflows/MegaLinter/badge.svg?branch=main)](https://github.com/ortelius/scec-compver/actions?query=workflow%3AMegaLinter+branch%3Amain)
