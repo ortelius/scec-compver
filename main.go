@@ -8,8 +8,8 @@ import (
 	"sort"
 	"strings"
 
-	_ "cli/docs"
-	"cli/models"
+	_ "github.com/ortelius/scec-compver/docs"
+	"github.com/ortelius/scec-compver/models"
 
 	"github.com/arangodb/go-driver/v2/arangodb"
 	"github.com/arangodb/go-driver/v2/arangodb/shared"
