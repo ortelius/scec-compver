@@ -266,11 +266,11 @@ func NewComponentVersionDetails(c *fiber.Ctx) error {
 	logger.Sugar().Infof("%s=%s\n", cid, dbStr) // log the new nft
 
 	// add the compver to the database.  Ignore if it already exists since it will be identical
-	if resp, err = dbconn.Collection.CreateDocument(ctx, compver); err != nil && !shared.IsConflict(err) {
+	if resp, err = dbconn.Collections["components"].CreateDocument(ctx, compver); err != nil && !shared.IsConflict(err) {
 		logger.Sugar().Errorf("Failed to create document: %v", err)
 	}
 	meta := resp.DocumentMeta
-	logger.Sugar().Infof("Created document in collection '%s' in db '%s' key='%s'\n", dbconn.Collection.Name(), dbconn.Database.Name(), meta.Key)
+	logger.Sugar().Infof("Created document in collection '%s' in db '%s' key='%s'\n", dbconn.Collections["components"].Name(), dbconn.Database.Name(), meta.Key)
 
 	return c.JSON(compver) // return the compver object in JSON format.  This includes the new _key
 }
