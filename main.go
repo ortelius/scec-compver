@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/go-resty/resty/v2"
 	_ "github.com/ortelius/scec-compver/docs"
 	"github.com/ortelius/scec-compver/models"
 
@@ -242,6 +243,23 @@ func GetComponentVersionDetails(c *fiber.Ctx) error {
 	return c.JSON(compver) // return the compver in JSON format
 }
 
+func convertGitURL(gitURL string) string {
+	if strings.HasPrefix(gitURL, "git@") || strings.Contains(gitURL, ":") {
+		gitURL = strings.Replace(gitURL, "ssh://", "", 1) // Remove "ssh://" if present
+		parts := strings.Split(gitURL, ":")
+		if len(parts) == 2 {
+			hostname := parts[0]
+			repoPath := parts[1]
+			hostname = strings.TrimPrefix(hostname, "git@")
+			gitURL = hostname + "/" + repoPath
+		} else {
+			gitURL = strings.Replace(gitURL, ":", "/", 1)
+		}
+	}
+	gitURL = strings.Replace(gitURL, ".git", "", -1)
+	return gitURL
+}
+
 // NewComponentVersionDetails godoc
 // @Summary Create a ComponentVersion
 // @Description Create a new ComponentVersion and persist it
@@ -261,6 +279,30 @@ func NewComponentVersionDetails(c *fiber.Ctx) error {
 		return c.Status(503).Send([]byte(err.Error()))
 	}
 
+	// Initialize Resty client
+	client := resty.New()
+
+	// get the OSSF Scorecard
+	var scorecard = model.NewScorecard()
+
+	url := ""
+	if compver.Attrs.GitURL != "" {
+		if compver.Attrs.GitCommit != "" {
+			url = "http://localhost:8083/msapi/scorecard/" + convertGitURL(compver.Attrs.GitURL) + "?commit=" + compver.Attrs.GitCommit
+		} else {
+			url = "http://localhost:8083/msapi/scorecard/" + convertGitURL(compver.Attrs.GitURL)
+		}
+	}
+
+	if url != "" {
+		if _, err = client.R().
+			SetResult(scorecard).
+			Get(url); err != nil {
+			logger.Sugar().Infof("Scorecard Error=%v\n", err)
+		}
+	}
+	compver.Scorecard = scorecard
+
 	cid, dbStr := database.MakeNFT(compver) // normalize the object into NFTs and JSON string for db persistence
 
 	logger.Sugar().Infof("%s=%s\n", cid, dbStr) // log the new nft
@@ -269,6 +311,7 @@ func NewComponentVersionDetails(c *fiber.Ctx) error {
 	if resp, err = dbconn.Collections["components"].CreateDocument(ctx, compver); err != nil && !shared.IsConflict(err) {
 		logger.Sugar().Errorf("Failed to create document: %v", err)
 	}
+
 	meta := resp.DocumentMeta
 	logger.Sugar().Infof("Created document in collection '%s' in db '%s' key='%s'\n", dbconn.Collections["components"].Name(), dbconn.Database.Name(), meta.Key)
 
