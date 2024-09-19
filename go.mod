@@ -6,7 +6,7 @@ toolchain go1.22.6
 
 require (
 	github.com/arangodb/go-driver/v2 v2.1.0
-	github.com/go-resty/resty/v2 v2.14.0
+	github.com/go-resty/resty/v2 v2.15.0
 	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/ortelius/scec-commons v0.1.45
 	github.com/package-url/packageurl-go v0.1.3
