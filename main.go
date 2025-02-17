@@ -256,7 +256,7 @@ func convertGitURL(gitURL string) string {
 			gitURL = strings.Replace(gitURL, ":", "/", 1)
 		}
 	}
-	gitURL = strings.Replace(gitURL, ".git", "", -1)
+	gitURL = strings.ReplaceAll(gitURL, ".git", "")
 	return gitURL
 }
 
