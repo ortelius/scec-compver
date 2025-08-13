@@ -75,11 +75,11 @@ func canonicalSegments(segs []string) (canSegs []string) {
 }
 
 func compareRubyGemsComponents(a, b []string) int {
-	max := max(len(a), len(b))
+	maxValue := max(len(a), len(b))
 
 	var compare int
 
-	for i := 0; i < max; i++ {
+	for i := 0; i < maxValue; i++ {
 		as := fetch(a, i, "0")
 		bs := fetch(b, i, "0")
 

@@ -15,11 +15,11 @@ RestAPI for the ComponentVersion Object
 
 ## Path Table
 
-| Method | Path | Description |
-| --- | --- | --- |
-| GET | [/msapi/compver](#getmsapicompver) | Get a List of Component Versions |
-| POST | [/msapi/compver](#postmsapicompver) | Create a ComponentVersion |
-| GET | [/msapi/compver/:key](#getmsapicompverkey) | Get a Component Version |
+| Method | Path                                       | Description                      |
+|--------|--------------------------------------------|----------------------------------|
+| GET    | [/msapi/compver](#getmsapicompver)         | Get a List of Component Versions |
+| POST   | [/msapi/compver](#postmsapicompver)        | Create a ComponentVersion        |
+| GET    | [/msapi/compver/:key](#getmsapicompverkey) | Get a Component Version          |
 
 ## Reference Table
 
@@ -32,10 +32,10 @@ RestAPI for the ComponentVersion Object
 
 ### [GET]/msapi/compver
 
-- Summary  
+- Summary
 Get a List of Component Versions
 
-- Description  
+- Description
 Get a list of component versions for the user.
 
 #### Responses
@@ -46,10 +46,10 @@ Get a list of component versions for the user.
 
 ### [POST]/msapi/compver
 
-- Summary  
+- Summary
 Create a ComponentVersion
 
-- Description  
+- Description
 Create a new ComponentVersion and persist it
 
 #### Responses
@@ -60,10 +60,10 @@ Create a new ComponentVersion and persist it
 
 ### [GET]/msapi/compver/:key
 
-- Summary  
+- Summary
 Get a Component Version
 
-- Description  
+- Description
 Get a compver details based on the _key or name.
 
 #### Responses
